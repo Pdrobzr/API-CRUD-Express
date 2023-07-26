@@ -34,7 +34,7 @@ app.get('/api/:id', async (req, res) => {
 app.post('/api', async (req, res) => {
     try{
         const { task } = req.body;
-        const date = new Date(Date.now()).toUTCString();
+        const date = new Date(Date.now()).toLocaleDateString();
         const query = "INSERT INTO tasks(nm_task, nm_situacao, dt_task) VALUES (?, ?, ?)";
         const [execute] = await connection.execute(query, [task, "pendente", date]);
         res.json({message: 'Task adicionada com sucesso!'});
