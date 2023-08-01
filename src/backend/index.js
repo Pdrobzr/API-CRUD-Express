@@ -1,15 +1,18 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const connection = require('./models/connect');
 
 require('dotenv').config();
 const PORT = process.env.PORT;
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/api', async (req, res) => {
     try{
         const [query] = await connection.execute("SELECT * FROM tasks");
+        // const nome = query.map((task) => task.nm_task)
         res.json({data: query});
     } catch (err) {
         res.json({message: err});
