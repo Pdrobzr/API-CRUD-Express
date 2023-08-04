@@ -13,9 +13,9 @@ app.get('/api', async (req, res) => {
     try{
         const [query] = await connection.execute("SELECT * FROM tasks");
         // const nome = query.map((task) => task.nm_task)
-        res.json({data: query});
+        res.json(query);
     } catch (err) {
-        res.json({message: err});
+        res.status(400).json({message: err});
     }
 });
 
@@ -25,12 +25,12 @@ app.get('/api/:id', async (req, res) => {
         const query = "SELECT * FROM tasks WHERE id_task = ?";
         const [execute] = await connection.execute(query, [id]);
         if(execute.length > 0){
-            res.json({data: execute});
+            res.json(execute);
         } else {
             res.json({message: "Erro ao encontrar essa task!"});
         }
     } catch(err) {
-        res.json({message: err});
+        res.status(400).json({message: err});
     }
 });
 
@@ -42,7 +42,7 @@ app.post('/api', async (req, res) => {
         const [execute] = await connection.execute(query, [task, "pendente", date]);
         res.json({message: 'Task adicionada com sucesso!'});
     } catch(err){
-        res.json({message: err});
+        res.status(400).json({message: err});
     }
 });
 
@@ -55,7 +55,7 @@ app.put('/api/:id', async (req, res) => {
         if(execute.affectedRows > 0) {
             res.json({message: 'Task atualizada com sucesso!'});
         } else {
-            res.json({message: 'Erro ao atualizar a task!'});
+            res.status(400).json({message: 'Erro ao atualizar a task!'});
         }
     } catch(err){
         res.json({message: err});
@@ -70,7 +70,7 @@ app.delete('/api/:id', async (req, res) => {
         if(execute.affectedRows > 0){
             res.json({message: 'Task deletada com sucesso!'});
         } else {
-            res.json({message: 'Erro ao deletar a task!'});
+            res.status(400).json({message: 'Erro ao deletar a task!'});
         }
     } catch(err){
         res.json({message: err});
