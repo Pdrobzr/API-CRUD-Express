@@ -12,7 +12,7 @@ app.use(cors());
 app.get('/api', async (req, res) => {
     try{
         const [query] = await connection.execute("SELECT * FROM tasks");
-        // const nome = query.map((task) => task.nm_task)
+        // const nome = query[0].nm_task;
         res.json(query);
     } catch (err) {
         res.status(400).json({message: err});
