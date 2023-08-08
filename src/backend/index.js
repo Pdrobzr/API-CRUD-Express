@@ -48,12 +48,12 @@ app.post('/api', async (req, res) => {
 
 app.put('/api/:id', async (req, res) => {
     try{
-        const { situacao } = req.body;
+        // const { situacao } = req.body;
         const { id } = req.params;
-        const query = "UPDATE tasks SET nm_situacao = ? WHERE id_task = ?";
-        const [execute] = await connection.execute(query, [situacao, id]);
+        const query = "UPDATE tasks SET nm_situacao = 'concluida' WHERE id_task = ?";
+        const [execute] = await connection.execute(query, [id]);
         if(execute.affectedRows > 0) {
-            res.json({message: 'Task atualizada com sucesso!'});
+            res.json({message: 'Task concluida com sucesso!'});
         } else {
             res.status(400).json({message: 'Erro ao atualizar a task!'});
         }
